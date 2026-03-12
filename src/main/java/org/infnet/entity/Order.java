@@ -1,8 +1,10 @@
-package org.infnet;
+package org.infnet.entity;
+
+import org.infnet.service.NotificationService;
 
 import java.util.List;
 
-class Order {
+public class Order {
     private final Client client;
     private final List<Product> productList;
     private final double discountRate = 0.1;
@@ -24,7 +26,7 @@ class Order {
         System.out.println("Total final: R$" + (total * (1 - discountRate)));
     }
 
-    public void sendEmail() {
-        EmailService.sendEmail(client.getEmail(), "Pedido recebido! Obrigado pela compra.");
+    public void sendMessage(NotificationService service) {
+        service.sendNotification(client.getEmail(), "Pedido recebido! Obrigado pela compra.");
     }
 }

@@ -1,4 +1,4 @@
-package org.infnet;
+package org.infnet.entity;
 
 public class Client {
     private String name;
