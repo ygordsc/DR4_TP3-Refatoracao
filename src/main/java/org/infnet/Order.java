@@ -1,22 +1,23 @@
 package org.infnet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 class Order {
-    public String clientName;
-    public String clientEmail;
-    public List products = new ArrayList<>();
-    public List quantities = new ArrayList<>();
-    public List prices = new ArrayList<>();
-    public double discountRate = 0.1;
+    private final Client client;
+    private final List<Product> productList;
+    private final double discountRate = 0.1;
+
+    public Order(Client client, List<Product> productList) {
+        this.client = client;
+        this.productList = productList;
+    }
 
     public void printInvoice() {
         double total = 0;
-        System.out.println("Cliente: " + clientName);
-        for (int i = 0; i < products.size(); i++) {
-            System.out.println(quantities.get(i) + "x " + products.get(i) + " - R$" + prices.get(i));
-            total += prices.get(i) * quantities.get(i);
+        System.out.println("Cliente: " + client.getName());
+        for (Product product : productList) {
+            System.out.println(product.getQuantity() + "x " + product.getName() + " - R$" + product.getPrice());
+            total += product.getPrice() * product.getQuantity();
         }
         System.out.println("Subtotal: R$" + total);
         System.out.println("Desconto: R$" + (total * discountRate));
@@ -24,6 +25,6 @@ class Order {
     }
 
     public void sendEmail() {
-        EmailService.sendEmail(clientEmail, "Pedido recebido! Obrigado pela compra.");
+        EmailService.sendEmail(client.getEmail(), "Pedido recebido! Obrigado pela compra.");
     }
 }
