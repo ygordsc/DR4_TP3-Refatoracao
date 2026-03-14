@@ -1,17 +1,28 @@
 package org.infnet;
 
+import org.infnet.entity.Client;
+import org.infnet.entity.Order;
+import org.infnet.entity.Product;
+import org.infnet.service.EmailService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class App {
     public static void main(String[] args) {
-        Order order = new Order();
-        order.clientName = "João";
-        order.clientEmail = "joao@email.com";
-        order.products.add("Notebook");
-        order.quantities.add(1);
-        order.prices.add(3500.0);
-        order.products.add("Mouse");
-        order.quantities.add(2);
-        order.prices.add(80.0);
+        Client client1 = new Client("João", "joao@email.com");
+
+        Product notebook = new Product("Notebook", 1, 3500.0);
+        Product mouse = new Product("Mouse", 2, 80.0);
+
+        List<Product> products = new ArrayList<>();
+        products.add(notebook);
+        products.add(mouse);
+
+        EmailService emailService = new EmailService();
+
+        Order order = new Order(client1, products);
         order.printInvoice();
-        order.sendEmail();
+        order.sendMessage(emailService);
     }
 }
