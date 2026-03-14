@@ -1,5 +1,6 @@
 package org.infnet.entity;
 
+import org.infnet.service.DiscountPolicy;
 import org.infnet.service.NotificationService;
 
 import java.util.List;
@@ -7,7 +8,8 @@ import java.util.List;
 public class Order {
     private final Client client;
     private final List<Product> productList;
-    private final double discountRate = 0.1;
+    private final DiscountPolicy discountPolicy = new DiscountPolicy();
+    private final double DISCOUNT_RATE = 0.1;
 
     public Order(Client client, List<Product> productList) {
         this.client = client;
@@ -21,9 +23,11 @@ public class Order {
             System.out.println(product.getQuantity() + "x " + product.getName() + " - R$" + product.getPrice());
             total += product.getPrice() * product.getQuantity();
         }
+        double desconto = discountPolicy.calculateDiscount(total, DISCOUNT_RATE);
+
         System.out.println("Subtotal: R$" + total);
-        System.out.println("Desconto: R$" + (total * discountRate));
-        System.out.println("Total final: R$" + (total * (1 - discountRate)));
+        System.out.println("Desconto: R$" + desconto);
+        System.out.println("Total final: R$" + (total - desconto));
     }
 
     public void sendMessage(NotificationService service) {

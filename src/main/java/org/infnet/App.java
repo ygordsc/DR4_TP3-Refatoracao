@@ -15,7 +15,7 @@ public class App {
         Product notebook = new Product("Notebook", 1, 3500.0);
         Product mouse = new Product("Mouse", 2, 80.0);
 
-        List<Product> products = new ArrayList<Product>();
+        List<Product> products = new ArrayList<>();
         products.add(notebook);
         products.add(mouse);
 
